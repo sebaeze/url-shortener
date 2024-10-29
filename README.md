@@ -3,16 +3,19 @@ URL shortener like goo.gl, https://www.shorturl.at/ or https://bitly.com/ for pu
 
 # Architectural decisions
 
-| Component  | SLA | Product/Software | Alternatives | Decicision|
+| Component | Product/Software | SLA | Alternatives | Decicision|
 | ------------- | ---- | ------------- | ------------- | ------------- |
-| Cloud provider | N/A | Programming Language | Javascript/Nodejs  | Python, Java | Selected due to previous experience |AWS  | CGP, IBM Cloud, Azure, Heroku| Plenty of services. Several pricing plans. Lot of documentation. Large technical community. Easy to scale due to integration with several services. |
-| API Gateway | 99.95% | AWS API Gateway  | IBM API Connect, Cloudflare, | Easy integration to AWS's services  |
+| Cloud provider | N/A | AWS  | CGP, IBM Cloud, Azure, Heroku| Plenty of services. Several pricing plans. Lot of documentation. Large technical community. Easy to scale due to integration with several services. |
+| API Gateway | AWS API Gateway | 99.95% | IBM API Connect, Cloudflare, | Easy integration to AWS's services  |
 | CDN | Cloudfront  | 99.99% |  | Easy integration to AWS's services  |
 | Database | Dynamodb  | 99.99% | SQLServer, MySQL, MongoDB, Cloudant | Managed NoSQL database - serverless. Flexible. High performance.   |
 | Runtime | Lambda  |  99.95% | Kubernetes (ECS,EKS), Virtual Machine(EC2) | Automatic scale. Easy to integrate with load balancers and spread across several Regions using Coudfront.  |
-| Programming Language | N/A | Javascript/Nodejs  | Python, Java | Selected due to previous experience |
+| Programming Language | Javascript/Nodejs  | N/A | Python, Java | Selected due to previous experience |
 
-Note: 
+
+# High available solution
+
+![alt text](./diagrams/high_availability_overview.png)
 
 ## Cloud provider
 
