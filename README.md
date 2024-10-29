@@ -3,8 +3,8 @@ URL shortener like goo.gl, https://www.shorturl.at/ or https://bitly.com/ for pu
 
 # Architectural decisions
 
-| Component  | Product / Software | Alternatives | Decicision|
-| ------------- | ------------- |
+| Component  | Product/Software | Alternatives | Decicision|
+| ------------- | ------------- | ------------- | ------------- |
 | Cloud provider  | AWS  | CGP, IBM Cloud, Azure, Heroku| Plenty of services. Several pricing plans. Large amount of documentation. Large technical community |
 
 ## Cloud provider
