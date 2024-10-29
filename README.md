@@ -3,6 +3,10 @@ URL shortener like goo.gl, https://www.shorturl.at/ or https://bitly.com/ for pu
 
 # Architectural decisions
 
+| Component  | Product / Software | Alternatives | Decicision|
+| ------------- | ------------- |
+| Cloud provider  | AWS  | CGP, IBM Cloud, Azure, Heroku| Plenty of services. Several pricing plans. Large amount of documentation. Large technical community |
+
 ## Cloud provider
 
 ### Selected: AWS
@@ -17,12 +21,19 @@ Cons:
 - Vendor lock-in: Despite having the serverless function services available in other cloud providers, It requires custom configuration tied to AWS services in case of migrating to other cloud provider
 - 
 
-### Alternatives
+| Content Cell  | Content Cell  |
 
-| CGP  | Azure | IBM Cloud | Heroku | 
-| ------------- | ------------- |
-| Content Cell  | Content Cell  |
-| Content Cell  | Content Cell  |
+### Well-Architected Framework
+
+- Operational Excellence
+- Security
+- Reliability
+- Performance Efficiency
+- Cost Optimization
+- Sustainability
+
+https://aws.amazon.com/architecture/well-architected/
+https://www.wellarchitectedlabs.com/
 
 ## Runtime
 
@@ -102,3 +113,24 @@ Cons:
 - Single point of failure
 - Vendor lock-in
 - 
+
+## Executing locally
+
+### Software requirements
+
+- Visual Studio Code
+- Git --> https://git-scm.com/book/en/v2/Getting-Started-The-Command-Line
+- Node.js >= v18.x --> https://nodejs.org/en/download/package-manager
+- Docker compose / podman compose --> https://podman-desktop.io/
+- AWS Cli --> https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+- AWS sam clie --> https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html
+- 
+
+### Installation
+- aws configure
+- https://github.com/sebaeze/url-shortener.git
+- cd backend
+- npm i claudia -g
+- npm install
+- npm start
+-

@@ -1,3 +1,7 @@
+# Local
+credentials.json
+deploy.bat
+
 # Logs
 logs
 *.log

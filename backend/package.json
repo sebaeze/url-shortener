@@ -2,14 +2,21 @@
   "name": "url-shortener",
   "version": "1.0.0",
   "description": "URL Shortener with node.js",
-  "main": "main.js",
+  "private": true,
+  "files": [
+    "main.js"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy":"claudia create --region us-east-1 --name url-shortener --handler main.handler --role arn:aws:iam::487527001877:role/url-shortener-executor --runtime nodejs16.x"
   },
   "keywords": [
     "meli",
     "function"
   ],
   "author": "sebaeze@gmail.com",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "claudia-api-builder": "^4.1.2"
+  }
 }
