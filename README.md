@@ -10,7 +10,7 @@ URL shortener like goo.gl, https://www.shorturl.at/ or https://bitly.com/ for pu
 | CDN | Cloudfront  |  | Easy integration to AWS's services  |
 | Database | Dynamodb  | SQLServer, MySQL, MongoDB, Cloudant | Managed NoSQL database - serverless. Flexible. High performance.   |
 | Runtime | Lambda  | Kubernetes (ECS,EKS), Virtual Machine(EC2) | Automatic scale. Easy to integrate with load balancers and spread across several Regions using Coudfront.  |
-| Programming Language | Nodejs  | Python, Java |    |
+| Programming Language | Javascript/Nodejs  | Python, Java | Selected due to previous experience |
 
 Note: 
 
