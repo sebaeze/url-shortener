@@ -15,7 +15,15 @@ URL shortener like goo.gl, https://www.shorturl.at/ or https://bitly.com/ for pu
 
 # High available solution
 
+The solution should be deployed into several AWS Regions, where Cloudfront will be addressing the traffic base of latency and It will detect if one region is not responding.
+
 ![alt text](./diagrams/high_availability_overview.png)
+
+# Backend solution
+
+The backend is implemented using Lambda and Node.js in order to quicly scale-out instances on high demand.
+
+![alt text](./diagrams/backend_overview.drawio.png)
 
 ## Cloud provider
 
