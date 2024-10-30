@@ -1,0 +1,4 @@
+{
+    "httpMethod": "POST",
+    "body": "{\"id\": \"www.google.com.ar\",\"SHORT_URL\": \"/short1111\"}"
+}

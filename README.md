@@ -21,7 +21,7 @@ The solution should be deployed into several AWS Regions, where Cloudfront will 
 
 # Backend solution
 
-The backend is implemented using Lambda and Node.js in order to quicly scale-out instances on high demand.
+The backend is developed using Node.js 20.x and deployed on Lambda, in order to quickly scale-out instances during high demand.
 
 ![alt text](./diagrams/backend_overview.drawio.png)
 
@@ -145,8 +145,19 @@ Cons:
 - 
 
 ### Installation
+- npm install -g aws-sam-local
 - aws configure
 - https://github.com/sebaeze/url-shortener.git
+- cd ./dynamodb
+- docker-compose up
+- Create local table:
+```bash
+aws dynamodb create-table --cli-input-json file://createTable.json  --endpoint-url http://localhost:8000
+aws dynamodb list-tables  --endpoint-url http://localhost:8000
+
+aws dynamodb put-item --table-name URL --item file://new_item.json  --endpoint-url http://localhost:8000
+aws dynamodb scan --table-name URL  --endpoint-url http://localhost:8000
+```
 - cd backend
 - npm i claudia -g
 - npm install
