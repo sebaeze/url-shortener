@@ -32,10 +32,15 @@ export const getByIdHandler = async (event) => {
   } catch (err) {
     console.log("Error", err);
   }
- 
+  //
+  let outData = {
+    message: "__procesando__",
+    ...item
+  }
+  //
   const response = {
     statusCode: 200,
-    body: JSON.stringify(item)
+    body: JSON.stringify(outData)
   };
 
   console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
