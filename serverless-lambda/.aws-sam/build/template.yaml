@@ -1,10 +1,7 @@
-AWSTemplateFormatVersion: 2010-09-09
-Description: >-
-  url-shortener-backend
-
+AWSTemplateFormatVersion: '2010-09-09'
+Description: url-shortener-backend
 Transform:
 - AWS::Serverless-2016-10-31
-
 Resources:
   getByLongUrlFunction:
     Type: AWS::Serverless::Function
@@ -12,63 +9,72 @@ Resources:
       Handler: src/handlers/get-by-long-url.getByLongUrlHandler
       Runtime: nodejs20.x
       Architectures:
-        - x86_64
+      - x86_64
       MemorySize: 128
       Timeout: 100
       Description: Get short-url by id, which is the long-url in lowercase.
       Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref URL
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: URL
       Environment:
         Variables:
-          URL_TABLE: !Ref URL
+          URL_TABLE:
+            Ref: URL
       Events:
         Api:
           Type: Api
           Properties:
             Path: /{id}
             Method: GET
+      CodeUri: getByLongUrlFunction
+    Metadata:
+      SamResourceId: getByLongUrlFunction
   putIShortUrlFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: src/handlers/put-short-url.putShortUrlHandler
       Runtime: nodejs20.x
       Architectures:
-        - x86_64
+      - x86_64
       MemorySize: 128
       Timeout: 100
       Description: Store short url in DynamoDB.
       Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref URL
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: URL
       Environment:
         Variables:
-          URL_TABLE: !Ref URL
+          URL_TABLE:
+            Ref: URL
       Events:
         Api:
           Type: Api
           Properties:
             Path: /
             Method: POST
-
+      CodeUri: putIShortUrlFunction
+    Metadata:
+      SamResourceId: putIShortUrlFunction
   URL:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: URL
       AttributeDefinitions:
-        - AttributeName: longUrl
-          AttributeType: S
-        - AttributeName: shortUrl
-          AttributeType: S
-        - AttributeName: status
-          AttributeType: S
-        - AttributeName: counter
-          AttributeType: N
+      - AttributeName: longUrl
+        AttributeType: S
+      - AttributeName: shortUrl
+        AttributeType: S
+      - AttributeName: status
+        AttributeType: S
+      - AttributeName: counter
+        AttributeType: N
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
-
 Outputs:
   WebEndpoint:
-    Description: "API Gateway endpoint URL for Prod stage"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/api/"
+    Description: API Gateway endpoint URL for Prod stage
+    Value:
+      Fn::Sub: https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/api/

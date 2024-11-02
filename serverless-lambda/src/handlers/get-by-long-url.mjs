@@ -4,26 +4,25 @@
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, GetCommand } from '@aws-sdk/lib-dynamodb';
 //
-const client = new DynamoDBClient({});
+const client = new DynamoDBClient();
 const ddbDocClient = DynamoDBDocumentClient.from(client);
-//
 const tableName = process.env.URL_TABLE;
-console.log("\n\n tableName: ",tableName,"\n\n");
-/**
- * A simple example includes a HTTP get method to get one item by id from a DynamoDB table.
- */
-export const getByIdHandler = async (event) => {
+/*
+*
+*/
+export const getByLongUrlHandler = async (event) => {
+  //
   if (event.httpMethod !== 'GET') {
     throw new Error(`getMethod only accept GET method, you tried: ${event.httpMethod}`);
   }
   //
-  console.info('received:', event);
+  console.log('\n\n\n **** received:', event," ****\n\n");
   //
-  const id = String(event.pathParameters.id).toLowerCase();
+  const longUrl = String(event.pathParameters.longUrl).toLowerCase();
   //
   var params = {
     TableName : tableName,
-    Key: { id: id },
+    Key: { longUrl: longUrl },
   };
   //
   try {
@@ -42,7 +41,9 @@ export const getByIdHandler = async (event) => {
     statusCode: 200,
     body: JSON.stringify(outData)
   };
-
+  //
   console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
   return response;
+  //
 }
+//
