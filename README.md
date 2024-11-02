@@ -8,8 +8,8 @@ URL shortener like goo.gl, https://www.shorturl.at/ or https://bitly.com/ for pu
 | Cloud provider | N/A | AWS  | CGP, IBM Cloud, Azure, Heroku| Plenty of services. Several pricing plans. Lot of documentation. Large technical community. Easy to scale due to integration with several services. |
 | API Gateway | AWS API Gateway | 99.95% | IBM API Connect, Cloudflare, | Easy integration to AWS's services  |
 | CDN | Cloudfront  | 99.99% |  | Easy integration to AWS's services  |
-| Database | Dynamodb  | 99.99% | SQLServer, MySQL, MongoDB, Cloudant | Managed NoSQL database - serverless. Flexible. High performance.   |
-| Runtime | Lambda  |  99.95% | Kubernetes (ECS,EKS), Virtual Machine(EC2) | Automatic scale. Easy to integrate with load balancers and spread across several Regions using Coudfront.  |
+| Database | Dynamodb  | 99.99% | SQLServer, MySQL, MongoDB, Cloudant | Managed NoSQL database - serverless. Flexible. High performance. Use of Global Secondary Index in order to avoid consume of capacity.   |
+| Runtime | Lambda  |  99.95% | Kubernetes (ECS,EKS), Virtual Machine(EC2) | Serverless+Auto-scale instances. Easy integration with load balancers and spread across several Regions using Coudfront.  |
 | Programming Language | Javascript/Nodejs  | N/A | Python, Java | Selected due to previous experience |
 | Version Control | Github  | 99.9% | Gitlab, Codecommit | Well known cloud-based tool. Free. |
 
@@ -26,23 +26,21 @@ The backend is developed using Node.js 20.x and deployed on Lambda, in order to 
 
 ![alt text](./diagrams/backend_overview.drawio.png)
 
-### Well-Architected Framework
+## Node.js and React.js
 
-- Operational Excellence
-- Security
-- Reliability
-- Performance Efficiency
-- Cost Optimization
-- Sustainability
-
-https://aws.amazon.com/architecture/well-architected/
-https://www.wellarchitectedlabs.com/
+Javascript is a very flexible programming language that allows to develop solution really fast. Having a big community there are plenty of solutions
+already created that can be reused and customized in order to support requirement's needs.
 
 
-# Reference Architectures
+## Database
 
-- https://aws.amazon.com/blogs/compute/build-a-serverless-private-url-shortener/
-- 
+Dynamodb provides a serverless solution that speed up the development and scaling of a solution.  Additionaly, JSON documento databases provides easy integration to Javascript (node.js) code.
+
+## Short URL encoding
+
+Se 
+
+
 ## Executing locally
 
 ### Software requirements
@@ -71,10 +69,28 @@ aws dynamodb scan --table-name URL  --endpoint-url http://localhost:8000
 ```
 - cd serverless-lambda
 - npm install
-- npm start
--
+
+### Run and Test locally
+
+- Docker should be running
+```bash
+sudo service docker start
+sudo service docker status
+```
+- Run SAM utility:
+```bash
+cd serverless-lambda
+sam build
+sam local invoke getByIdFunction --event ./events/event-get-by-id.json
+```
 
 ### Deploy to AWS
 - cd serverless-lambda
 - sam deploy --guided 
 
+
+# References
+
+- https://aws.amazon.com/blogs/compute/build-a-serverless-private-url-shortener/
+- https://medium.com/@sandeep4.verma/system-design-scalable-url-shortener-service-like-tinyurl-106f30f23a82
+- 
