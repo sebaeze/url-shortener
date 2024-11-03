@@ -1,22 +1,29 @@
 {
-  "name": "url-shortener",
-  "version": "1.0.0",
-  "description": "URL Shortener with node.js",
-  "private": true,
-  "files": [
-    "main.js"
-  ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy":"claudia create --region us-east-1 --name url-shortener --handler main.handler --role arn:aws:iam::487527001877:role/url-shortener-executor --runtime nodejs16.x"
-  },
-  "keywords": [
-    "meli",
-    "function"
-  ],
-  "author": "sebaeze@gmail.com",
-  "license": "ISC",
-  "dependencies": {
-    "claudia-api-builder": "^4.1.2"
-  }
+    "name": "url-shortener-backend",
+    "description": "url-shortener-backend",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "@aws-sdk/client-dynamodb": "^3.398.0",
+        "@aws-sdk/lib-dynamodb": "^3.398.0"
+    },
+    "devDependencies": {
+        "aws-sdk-client-mock": "^2.0.0",
+        "jest": "^29.2.1"
+    },
+    "scripts": {
+        "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js"
+    },
+    "jest": {
+        "testMatch": [
+            "**/__tests__/**/*.[jt]s?(x)",
+            "**/?(*.)+(spec|test).[jt]s?(x)",
+            "**/__tests__/**/*.mjs?(x)",
+            "**/?(*.)+(spec|test).mjs?(x)"
+        ],
+        "moduleFileExtensions": [
+            "mjs",
+            "js"
+        ]
+    }
 }

@@ -67,6 +67,15 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 5
         WriteCapacityUnits: 5
+      GlobalSecondaryIndexes:
+        - IndexName: GSI_SHORT_URL
+          KeySchema: 
+            - AttributeName: shortUrl
+              KeyType: HASH
+          ProvisionedThroughput:
+              ReadCapacityUnits: 3
+              WriteCapacityUnits: 1
+        
 
 Outputs:
   WebEndpoint:

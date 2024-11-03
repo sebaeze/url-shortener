@@ -26,10 +26,14 @@ The backend is developed using Node.js 20.x and deployed on Lambda, in order to 
 
 ![alt text](./diagrams/backend_overview.drawio.png)
 
-## Node.js and React.js
+## Node.js
 
 Javascript is a very flexible programming language that allows to develop solution really fast. Having a big community there are plenty of solutions
 already created that can be reused and customized in order to support requirement's needs.
+
+# Frontend
+
+React.js and Ant-Design for custom ui components.
 
 
 ## Database
@@ -70,7 +74,7 @@ aws dynamodb scan --table-name URL  --endpoint-url http://localhost:8000
 - cd serverless-lambda
 - npm install
 
-### Run and Test locally
+### Run and Test backend locally
 
 - Docker should be running
 ```bash
@@ -84,6 +88,16 @@ sam build
 sam local invoke getByIdFunction --event ./events/event-get-by-id.json
 ```
 
+### Run and Test frontend locally
+
+- 
+```bash
+cd frontend
+npm install
+npm start
+```
+- Open in browser http://127.0.0.1:3000
+
 ### Deploy to AWS
 - cd serverless-lambda
 - sam deploy --guided 
@@ -93,4 +107,4 @@ sam local invoke getByIdFunction --event ./events/event-get-by-id.json
 
 - https://aws.amazon.com/blogs/compute/build-a-serverless-private-url-shortener/
 - https://medium.com/@sandeep4.verma/system-design-scalable-url-shortener-service-like-tinyurl-106f30f23a82
-- 
+- https://ant.design/docs/react/introduce
