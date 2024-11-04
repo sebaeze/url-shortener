@@ -1,7 +1,9 @@
 /*
 *
 */
-export const setCors = () => {
+export const setCors = (event) => {
+    //
+    console.log("/proxyHandlers:: event: ",event) ;
     //
     return {
       statusCode: 200,

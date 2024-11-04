@@ -1,6 +1,6 @@
 {
-    "name": "url-shortener-backend",
-    "description": "url-shortener-backend",
+    "name": "shortener-url-backend",
+    "description": "shortener-url-backend",
     "version": "0.0.1",
     "private": true,
     "dependencies": {

@@ -1,21 +1,62 @@
 AWSTemplateFormatVersion: 2010-09-09
 Description: >-
-  url-shortener-backend
+  shortener-url-backend
 
 Transform:
 - AWS::Serverless-2016-10-31
 
 Resources:
-  getByLongUrlFunction:
+
+  updateCounterFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/handlers/get-by-long-url.getByLongUrlHandler
+      Handler: src/handlers/update-counter.updateCounterHandler
       Runtime: nodejs20.x
       Architectures:
         - x86_64
       MemorySize: 128
       Timeout: 100
-      Description: Get short-url by id, which is the long-url in lowercase.
+      Description: Update the counter of specific URL
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref URL
+      Environment:
+        Variables:
+          URL_TABLE: !Ref URL
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /counter
+            Method: POST
+            
+  proxyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/proxy.setCors
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: PROXY set CORS.
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: OPTIONS
+
+  getByLongUrlFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/getUrlInfo.getByLongUrlHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: Get information about url stored in Dynamodb.
       Policies:
         - DynamoDBCrudPolicy:
             TableName: !Ref URL
@@ -28,6 +69,7 @@ Resources:
           Properties:
             Path: /{id}
             Method: GET
+
   putIShortUrlFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -50,6 +92,7 @@ Resources:
           Properties:
             Path: /
             Method: POST
+
   deleteShortUrlFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -72,28 +115,6 @@ Resources:
           Properties:
             Path: /
             Method: DELETE
-  proxyFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: src/handlers/proxy.setCors
-      Runtime: nodejs20.x
-      Architectures:
-        - x86_64
-      MemorySize: 128
-      Timeout: 100
-      Description: PROXY set CORS
-      Policies:
-        - DynamoDBCrudPolicy:
-            TableName: !Ref URL
-      Environment:
-        Variables:
-          URL_TABLE: !Ref URL
-      Events:
-        Api:
-          Type: Api
-          Properties:
-            Path: /
-            Method: OPTIONS
 
   URL:
     Type: AWS::DynamoDB::Table

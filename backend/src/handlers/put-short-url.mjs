@@ -29,6 +29,7 @@ export const putShortUrlHandler = async (event) => {
             counter: 1
         }
     };
+    params.Item.longUrl = String(params.Item.longUrl).trim().toLowerCase();
     //
     try {
         const data = await ddbDocClient.send(new PutCommand(params));

@@ -1,7 +1,7 @@
 /*
 
 */
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBClient, DeleteItemCommand } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb';
 //
 const client = new DynamoDBClient({});
@@ -18,36 +18,36 @@ export const deleteShortUrlHandler = async (event) => {
     }
     //
     console.info('\n\n /deleteShortUrlHandler::received:', event);
-    //
     const body = JSON.parse(event.body);
-    const params = {
-        TableName : tableName,
-        Key: {
-            longUrl: body.long_url||body.longUrl
-        },
-        ReturnValues: 'ALL_OLD'
-    };
-    //
-    try {
-        const data = await ddbDocClient.delete(params);
-        console.log("Success - item added or updated", data);
-    } catch (err) {
-        console.log("Error", err.stack);
-    }
-    //
     const response = {
         statusCode: 200,
         'headers': {
             "Content-Type" : "application/json",
             "Access-Control-Allow-Origin" : "*",
-            "Allow" : "GET, OPTIONS, POST",
-            "Access-Control-Allow-Methods" : "GET, OPTIONS, POST",
+            "Allow" : "GET, OPTIONS, POST, DELETE",
+            "Access-Control-Allow-Methods" : "GET, OPTIONS, POST, DELETE",
             "Access-Control-Allow-Headers" : "*"
-        },
-        body: JSON.stringify(body)
+        }
     };
     //
-    console.info(`response from: ${event.path} statusCode: ${response.statusCode} body: ${response.body}`);
+    try {
+        //
+        const params = {
+            TableName : tableName,
+            Key: {
+                longUrl: {S: body.long_url||body.longUrl}
+            }
+        };
+        params.Key.longUrl.S = String(params.Key.longUrl.S).trim().toLowerCase();
+        //
+        const data = await ddbDocClient.send(new DeleteItemCommand(params));
+        console.log("Success - item deleted", data);
+        //
+    } catch (err) {
+        console.log("***ERROR: ", err);
+        response.statusCode = 500 ;
+    }
+    //
     return response;
     //
 };

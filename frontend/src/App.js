@@ -9,8 +9,10 @@ import { ArrowUpOutlined, LinkOutlined, LoadingOutlined } from '@ant-design/icon
 
 //
 import { regexValidateUrl } from './util';
-import { fetchUrlInfo, shortUrl } from './api';
+import { fetchUrlInfo, apiMakeUrlShorter, apiDeleteUrl } from './api';
 //
+let currentUrl = window.location.href ;
+if ( currentUrl.substring(currentUrl.length-1)!=="/" ){currentUrl=currentUrl+"/";};
 const pattern = regexValidateUrl();
 //
 const App = () => {
@@ -21,6 +23,7 @@ const App = () => {
     const [validUrl,setValidUrl] = useState(false);
     const [flagLoading,setFlagLoading] = useState(false);
     const [urlInfo,setUrlInfo] = useState(undefined);
+    const [searchMessage,setMearchMessage] = useState("");
     //
     const onChangeInputUrl = (argStr) => {
         if ( argStr!==longUrlInput ){
@@ -35,27 +38,58 @@ const App = () => {
     }
     //
     const onSearch = () => {
+        //
         setFlagLoading(true);
+        setMearchMessage("");
+        //
         fetchUrlInfo(longUrlInput)
             .then((data)=>{
-                console.log("****afterfetch:: ",data,"***");
-                setUrlInfo(data)
+                const newData = {
+                    shortUrl: data.shortUrl||data.short_url,
+                    counter: data.counter||0,
+                    longUrl: longUrlInput
+                }
+                if ( newData.counter===0 ){
+                    setMearchMessage("Not Found");
+                }
+                setUrlInfo(newData)
                 setFlagLoading(false);
             })
             .catch(()=>{
                 setFlagLoading(false);
+                setMearchMessage("Not Found");
             }) ;
     };
     //
     const onMakeshort = () => {
         setFlagLoading(true);
-        shortUrl(longUrlInput)
+        apiMakeUrlShorter(longUrlInput)
             .then((data)=>{
-                console.log("****after_shortUrl:: ",data,"***");
-                setUrlInfo(data)
+                const newData = {
+                    shortUrl: data.shortUrl||data.short_url,
+                    counter: data.counter||0,
+                    longUrl: longUrlInput
+                }
+                if ( newData.counter===0 ){
+                    setMearchMessage("Not Found");
+                }
+                setUrlInfo(newData)
                 setFlagLoading(false);
             })
             .catch(()=>{
+                setFlagLoading(false);
+            }) ;
+    }
+    //
+    const onDeleteUrl = () => {
+        setFlagLoading(true);
+        apiDeleteUrl(longUrlInput)
+            .then(()=>{
+                setUrlInfo(undefined);
+                setMearchMessage("Deleted");
+                setFlagLoading(false);
+            })
+            .catch((errrr)=>{
                 setFlagLoading(false);
             }) ;
     }
@@ -66,14 +100,13 @@ const App = () => {
                 <Col span={4}></Col>
                 <Col span={19}>
                     <Row>
-                        <h2 style={{fontSize:'64px'}}>Input an URL to make shorter:</h2>
+                        <h2 style={{fontSize:'48px'}}>Input an URL to make shorter:</h2>
                     </Row>
                     <Row>
                         <Form name="manage_url" 
                                 span={24}
                                 initialValues={{ remember: true }}
                                 autoComplete="off"
-                                //onFinish={onSearch}
                         >
                             <Form.Item name="long_url"
                                 span={22}
@@ -98,7 +131,7 @@ const App = () => {
                                                 <Button type="dashed" style={{border:'1px solid orange'}} disabled={validUrl!==true} onClick={onMakeshort}>
                                                 Make It Short
                                                 </Button>
-                                                <Button type="primary" danger ghost disabled={(validUrl!==true || urlInfo===undefined)}>
+                                                <Button type="primary" danger ghost disabled={(validUrl!==true || urlInfo===undefined)}  onClick={onDeleteUrl} >
                                                 Delete
                                                 </Button>
                                             </Flex>
@@ -113,13 +146,12 @@ const App = () => {
                 <Col span={3}></Col>
                 <Col span={15}>
                 {
-                    urlInfo===undefined
-                    ?   null
-                    :   <Row>
+                    (urlInfo!==undefined && urlInfo.shortUrl!==undefined)
+                    ?   <Row>
                             <Divider />
                             <Col span={10} style={{textAlign:'center'}} >
-                                <a icon={<LinkOutlined />} href={urlInfo.shortUrl} target="_blank" rel="noreferrer" color="#55acee" style={{fontSize:'24px',lineHeight:'90px'}} >
-                                {urlInfo.shortUrl}
+                                <a icon={<LinkOutlined />} href={currentUrl+urlInfo.shortUrl} target="_blank" rel="noreferrer" color="#55acee" style={{fontSize:'24px',lineHeight:'90px'}} >
+                                {currentUrl+urlInfo.shortUrl}
                                 </a>
                             </Col>
                             <Col span={6}>
@@ -135,6 +167,12 @@ const App = () => {
                                 </Card>
                             </Col>
                         </Row>
+                    :   (longUrlInput!==undefined && longUrlInput.length>2 && validUrl===true)
+                        ?   <Row>
+                                <Col span={6}></Col>
+                                <Col span={12}><h1>{searchMessage}</h1></Col>
+                            </Row>
+                        :   null
                 }
                 </Col>
             </Row>
@@ -143,4 +181,6 @@ const App = () => {
         return outRender ;
         //
 };
+//
 export default App;
+//

@@ -31,21 +31,28 @@ The backend is developed using Node.js 20.x and deployed on Lambda, in order to 
 Javascript is a very flexible programming language that allows to develop solution really fast. Having a big community there are plenty of solutions
 already created that can be reused and customized in order to support requirement's needs.
 
+## Lambda
+
+Lambda is a serverles, Platform as a Service ( PaaS ), that means that it doesn't require compute provisioning.
+
+Advantages for this requirement:
+- No need to manage infra. Focus only on development.
+- Scale up/down based on demand.
+- Easy to integrate with API gateway.
+- Widely used, full of documentation/training available on the web
+
+## DynamoDB
+
+Dynamodb provides a serverless solution that speed up the development and scaling of a solution.  Additionaly, JSON documento databases provides easy integration to Javascript (node.js) code.
+
+There is one table, indexed by the real URL in uppercase.
+
 # Frontend
 
 React.js a well known library, which was created by Meta, for creating web and mobiles user interfaces.
 Ant-Design is used in order to have pre-configured ui components and deal with differents dispositives.
 
 ![alt text](./diagrams/frontend_overview.drawio.png)
-
-## Database
-
-Dynamodb provides a serverless solution that speed up the development and scaling of a solution.  Additionaly, JSON documento databases provides easy integration to Javascript (node.js) code.
-
-## Short URL encoding
-
-Se 
-
 
 ## Executing locally
 
