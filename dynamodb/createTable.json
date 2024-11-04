@@ -2,44 +2,18 @@
     "TableName": "URL",
     "KeySchema": [
         {
-            "AttributeName": "id",
+            "AttributeName": "longUrl",
             "KeyType": "HASH"
-        },
-        {
-            "AttributeName": "SHORT_URL",
-            "KeyType": "RANGE"
         }
     ],
     "AttributeDefinitions": [
         {
-            "AttributeName": "id",
-            "AttributeType": "S"
-        },
-        {
-            "AttributeName": "SHORT_URL",
+            "AttributeName": "longUrl",
             "AttributeType": "S"
         }
     ],
     "ProvisionedThroughput": {
-        "ReadCapacityUnits": 5,
-        "WriteCapacityUnits": 5
-    },
-    "GlobalSecondaryIndexes": [
-        {
-            "IndexName": "INDEX-ID",
-            "KeySchema": [
-                {
-                    "AttributeName": "id",
-                    "KeyType": "HASH"
-                }
-            ],
-            "Projection": {
-                "ProjectionType": "ALL"
-            },
-            "ProvisionedThroughput": {
-                "ReadCapacityUnits": 5,
-                "WriteCapacityUnits": 5
-            }
-        }
-    ]
+        "ReadCapacityUnits": 10,
+        "WriteCapacityUnits": 10
+    }
  }

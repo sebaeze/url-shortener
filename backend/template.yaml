@@ -50,32 +50,65 @@ Resources:
           Properties:
             Path: /
             Method: POST
+  deleteShortUrlFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/delete-short-url.deleteShortUrlHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: DELETE short url in DynamoDB.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref URL
+      Environment:
+        Variables:
+          URL_TABLE: !Ref URL
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: DELETE
+  proxyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/proxy.setCors
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: PROXY set CORS
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref URL
+      Environment:
+        Variables:
+          URL_TABLE: !Ref URL
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /
+            Method: OPTIONS
 
   URL:
     Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
     Properties:
       TableName: URL
       AttributeDefinitions:
         - AttributeName: longUrl
           AttributeType: S
-        - AttributeName: shortUrl
-          AttributeType: S
-        - AttributeName: status
-          AttributeType: S
-        - AttributeName: counter
-          AttributeType: N
+      KeySchema:
+        - AttributeName: "longUrl"
+          KeyType: "HASH"
       ProvisionedThroughput:
-        ReadCapacityUnits: 5
-        WriteCapacityUnits: 5
-      GlobalSecondaryIndexes:
-        - IndexName: GSI_SHORT_URL
-          KeySchema: 
-            - AttributeName: shortUrl
-              KeyType: HASH
-          ProvisionedThroughput:
-              ReadCapacityUnits: 3
-              WriteCapacityUnits: 1
-        
+        ReadCapacityUnits: 10
+        WriteCapacityUnits: 10
 
 Outputs:
   WebEndpoint:

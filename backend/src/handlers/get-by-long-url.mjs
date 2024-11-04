@@ -18,7 +18,7 @@ export const getByLongUrlHandler = async (event) => {
   //
   console.log('\n\n\n **** received:', event," ****\n\n");
   //
-  const longUrl = String(event.pathParameters.longUrl).toLowerCase();
+  const longUrl = String(event.pathParameters.id||event.pathParameters.longUrl||event.pathParameters.long_url).toLowerCase();
   //
   var params = {
     TableName : tableName,
@@ -33,12 +33,20 @@ export const getByLongUrlHandler = async (event) => {
   }
   //
   let outData = {
-    message: "__procesando__",
-    ...item
+    counter: 1,
+    ...item,
+    longUrl
   }
   //
   const response = {
     statusCode: 200,
+    'headers': {
+        "Content-Type" : "application/json",
+        "Access-Control-Allow-Origin" : "*",
+        "Allow" : "GET, OPTIONS, POST",
+        "Access-Control-Allow-Methods" : "GET, OPTIONS, POST",
+        "Access-Control-Allow-Headers" : "*"
+    },
     body: JSON.stringify(outData)
   };
   //

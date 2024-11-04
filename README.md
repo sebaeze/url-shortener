@@ -33,8 +33,10 @@ already created that can be reused and customized in order to support requiremen
 
 # Frontend
 
-React.js and Ant-Design for custom ui components.
+React.js a well known library, which was created by Meta, for creating web and mobiles user interfaces.
+Ant-Design is used in order to have pre-configured ui components and deal with differents dispositives.
 
+![alt text](./diagrams/frontend_overview.drawio.png)
 
 ## Database
 
@@ -71,7 +73,7 @@ aws dynamodb list-tables  --endpoint-url http://localhost:8000
 aws dynamodb put-item --table-name URL --item file://new_item.json  --endpoint-url http://localhost:8000
 aws dynamodb scan --table-name URL  --endpoint-url http://localhost:8000
 ```
-- cd serverless-lambda
+- cd backend
 - npm install
 
 ### Run and Test backend locally
@@ -83,8 +85,8 @@ sudo service docker status
 ```
 - Run SAM utility:
 ```bash
-cd serverless-lambda
-sam build
+cd backend
+sam build --cached
 sam local invoke getByIdFunction --event ./events/event-get-by-id.json
 ```
 
@@ -98,13 +100,21 @@ npm start
 ```
 - Open in browser http://127.0.0.1:3000
 
-### Deploy to AWS
-- cd serverless-lambda
+# Deploy to AWS
+
+- cd backend
+- sam build  --cached
 - sam deploy --guided 
 
+# Pending:
+
+- Automated deployment using some tools, such as: Github Actions, CodeDeploy, etc.
+- Automated testing in the pipeline 
 
 # References
 
 - https://aws.amazon.com/blogs/compute/build-a-serverless-private-url-shortener/
 - https://medium.com/@sandeep4.verma/system-design-scalable-url-shortener-service-like-tinyurl-106f30f23a82
 - https://ant.design/docs/react/introduce
+- https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/getting-started-cloudfront-overview.html
+- 
