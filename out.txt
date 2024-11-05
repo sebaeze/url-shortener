@@ -1,1 +1,0 @@
-{"errorType": "Error", "errorMessage": "getMethod only accept GET method, you tried: undefined", "trace": ["Error: getMethod only accept GET method, you tried: undefined", "    at Runtime.getByIdHandler [as handler] (file:///var/task/src/handlers/get-by-id.mjs:17:11)", "    at Runtime.handleOnceNonStreaming (file:///var/runtime/index.mjs:1173:29)"]}
