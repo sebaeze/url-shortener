@@ -17,8 +17,6 @@ const pattern = regexValidateUrl();
 //
 const App = () => {
     //
-    document.title="URL Shortener";
-    //
     const [longUrlInput,setLongUrlInput] = useState("");
     const [validUrl,setValidUrl] = useState(false);
     const [flagLoading,setFlagLoading] = useState(false);

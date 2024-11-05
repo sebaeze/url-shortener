@@ -29,6 +29,29 @@ export const fetchUrlInfo = (longUrl) => {
     })
 };
 //
+export const fetchShortUrlInfo = (shortUrl) => {
+    return new Promise((resOk,resErr)=>{
+        try {
+            const url = process.env.REACT_APP_API_SHORTENER+"/shortUrl/"+shortUrl ;
+            fetch(url)
+                .then((resp)=>{
+                    if ( resp.status>100 & resp.status<400 ){
+                        return resp.json();
+                    } else {
+                        console.log("\n\n***ERROR::status: ",resp.status,"***\n\n");
+                        throw new Error("Error fetch shortUrl: "+url+"***");
+                    }
+                })
+                .then((data)=>{
+                    resOk(data);
+                })
+                .catch(resErr);
+        } catch(err){
+            resErr(err);
+        }
+    })
+};
+//
 export const apiMakeUrlShorter = (longUrl) => {
     return new Promise((resOk,resErr)=>{
         try {
@@ -77,6 +100,30 @@ export const apiDeleteUrl = (longUrl) => {
                 })
                 .then((data)=>{
                     resOk(data);
+                })
+                .catch(resErr);
+        } catch(err){
+            resErr(err);
+        }
+    })
+};
+//
+export const apiUpdateCounter = (argLongUrl) => {
+    return new Promise((resOk,resErr)=>{
+        try {
+            //
+            const url = process.env.REACT_APP_API_SHORTENER+"/counter" ;
+            fetch(url,{method: "POST", headers: HEADERS, body: JSON.stringify({ long_url: argLongUrl })})
+                .then((resp)=>{
+                    if ( resp.status>100 & resp.status<400 ){
+                        return resp.json();
+                    } else {
+                        console.log("\n\n***ERROR::status: ",resp.status,"***\n\n");
+                        throw new Error("Error fetch url: "+url+"***");
+                    }
+                })
+                .then((data)=>{
+                    resOk({...data, longUrl: argLongUrl});
                 })
                 .catch(resErr);
         } catch(err){

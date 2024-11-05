@@ -70,6 +70,29 @@ Resources:
             Path: /{id}
             Method: GET
 
+  getByShortUrlFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/getUrlInfo.getByShortUrlHandler
+      Runtime: nodejs20.x
+      Architectures:
+        - x86_64
+      MemorySize: 128
+      Timeout: 100
+      Description: Get information about url stored in Dynamodb.
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref URL
+      Environment:
+        Variables:
+          URL_TABLE: !Ref URL
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /shortUrl/{id}
+            Method: GET
+
   putIShortUrlFunction:
     Type: AWS::Serverless::Function
     Properties:

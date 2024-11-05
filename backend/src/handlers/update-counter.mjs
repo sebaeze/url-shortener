@@ -21,21 +21,25 @@ export const updateCounterHandler = async (event) => {
     //
     try {
         //
-        const updater = {
+        const params = {
             TableName: tableName,
             Key: {
-              longUrl: body.long_url||body.longUrl,
+              longUrl: {S: body.long_url||body.longUrl},
             },
-            UpdateExpression: "SET counter = if_not_exists(counter, :initial) + :num",
+            UpdateExpression: "SET #counter = if_not_exists(#counter, :initial) + :num",
+            ExpressionAttributeNames:{
+                "#counter": "counter"
+            },
             ExpressionAttributeValues: {
-              ":num": 1,
-              ":initial": 1,
+              ":num": {N: "1"},
+              ":initial": {N: "1"},
             },
         } ;
         //
-        params.Key.longUrl = String(params.Key.longUrl).trim().toLowerCase();
+        params.Key.longUrl.S = String(params.Key.longUrl.S).trim().toLowerCase();
+        console.log("....params: ",params,";***");
         //
-        const result = await ddbDocClient.send(new UpdateItemCommand(updater));
+        const result = await ddbDocClient.send(new UpdateItemCommand(params));
         //
         console.log("....UpdateItemCommand::result: ",result,";");
         //

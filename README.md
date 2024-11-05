@@ -43,9 +43,9 @@ Advantages for this requirement:
 
 ## DynamoDB
 
-Dynamodb provides a serverless solution that speed up the development and scaling of a solution.  Additionaly, JSON documento databases provides easy integration to Javascript (node.js) code.
+Dynamodb provides a serverless solution that speed up the development and scale of the solution. As a JSON documento databases, It provides easy integration to Javascript (node.js) applications.
 
-There is one table, indexed by the real URL in uppercase.
+Additionally, AWS have several features that can improve the capacity, such as Amazon DynamoDB Accelerator (DAX).
 
 # Frontend
 
@@ -53,6 +53,13 @@ React.js a well known library, which was created by Meta, for creating web and m
 Ant-Design is used in order to have pre-configured ui components and deal with differents dispositives.
 
 ![alt text](./diagrams/frontend_overview.drawio.png)
+
+# Cloudfront
+
+Cloudfront is a globally-distributed network offered by Amazon Web Services, which securely transfers content such as software, SDKs, videos, etc., to the clients, with high transfer speed.
+
+The bundle of the frontend application, which is developed using React.js library, It is stored in AWS S3 in order to be distributed to the users through Cloudfront. 
+This solution allows to cache and serve static files faster.
 
 ## Executing locally
 
@@ -124,4 +131,4 @@ npm start
 - https://medium.com/@sandeep4.verma/system-design-scalable-url-shortener-service-like-tinyurl-106f30f23a82
 - https://ant.design/docs/react/introduce
 - https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/getting-started-cloudfront-overview.html
-- 
+- https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DAX.create-cluster.console.html
