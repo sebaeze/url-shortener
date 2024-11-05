@@ -1,6 +1,12 @@
 # api-shortener
 URL shortener like goo.gl, https://www.shorturl.at/ or https://bitly.com/ for publishing promotions over Twitter
 
+# High available solution
+
+The solution should be deployed into several AWS Regions, where Cloudfront will be addressing the traffic base of latency and It will detect if one region is not responding.
+
+![alt text](./diagrams/high_availability_overview.png)
+
 # Architectural decisions
 
 | Component | Product/Software | SLA | Alternatives | Decicision|
@@ -14,12 +20,6 @@ URL shortener like goo.gl, https://www.shorturl.at/ or https://bitly.com/ for pu
 | Version Control | Github  | 99.9% | Gitlab, Codecommit | Well known cloud-based tool. Free. |
 
 
-# High available solution
-
-The solution should be deployed into several AWS Regions, where Cloudfront will be addressing the traffic base of latency and It will detect if one region is not responding.
-
-![alt text](./diagrams/high_availability_overview.png)
-
 # Backend solution
 
 The backend is developed using Node.js 20.x and deployed on Lambda, in order to quickly scale-out instances during high demand.
@@ -28,7 +28,7 @@ The backend is developed using Node.js 20.x and deployed on Lambda, in order to 
 
 ## Node.js
 
-Javascript is a very flexible programming language that allows to develop solution really fast. Having a big community there are plenty of solutions
+Javascript is a flexible programming language that allows to develop solution really fast. Having a big community there are plenty of solutions
 already created that can be reused and customized in order to support requirement's needs.
 
 ## Lambda
@@ -70,7 +70,7 @@ This solution allows to cache and serve static files faster.
 - Node.js >= v18.x --> https://nodejs.org/en/download/package-manager
 - Docker compose / podman compose --> https://podman-desktop.io/
 - AWS Cli --> https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
-- AWS sam clie --> https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html
+- AWS SAM Cli --> https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html
 - 
 
 ### Installation 
@@ -88,7 +88,6 @@ aws dynamodb put-item --table-name URL --item file://new_item.json  --endpoint-u
 aws dynamodb scan --table-name URL  --endpoint-url http://localhost:8000
 ```
 - cd backend
-- npm install
 
 ### Run and Test backend locally
 
@@ -122,8 +121,8 @@ npm start
 
 # Pending:
 
-- Automated deployment using some tools, such as: Github Actions, CodeDeploy, etc.
-- Automated testing in the pipeline 
+- Automated deployments, using pipelines from tools, such as: Github Actions, CodeDeploy, etc.
+- Automated testing.
 
 # References
 
