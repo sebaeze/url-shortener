@@ -1,5 +1,7 @@
-# api-shortener
-URL shortener like goo.gl, https://www.shorturl.at/ or https://bitly.com/ for publishing promotions over Twitter
+# URL Shortener
+
+The final url is --> https://d2a6wanazzhby9.cloudfront.net/
+
 
 # High available solution
 
