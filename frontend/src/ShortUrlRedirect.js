@@ -11,14 +11,11 @@ import { LoadingOutlined } from '@ant-design/icons';
 const ShortUrlRedirect = () => {
     //
     const [searching,setSearching] = useState(true);
-    const [url2redirect,setUrl2redirect] = useState("");
     const {shortUrl} = useParams();
     //
     useEffect(() => {
-        console.log("...useEffect:shortUrl: ",shortUrl,";");
         fetchShortUrlInfo(shortUrl)
             .then((data)=>{
-                //setUrl2redirect(data.longUrl);
                 return apiUpdateCounter(data.longUrl) ;
             })
             .then((resp)=>{
@@ -41,7 +38,7 @@ const ShortUrlRedirect = () => {
                     <br/><br/><br/><br/><br/><br/><br/><br/>
                     <Row>
                         <Col span={6}></Col>
-                        <Col span={8}><h1 style={{fontSize:'64px'}}>{url2redirect}</h1></Col>
+                        <Col span={8}><h1 style={{fontSize:'64px'}}>Redirecting...</h1></Col>
                     </Row>
                 </>
         }

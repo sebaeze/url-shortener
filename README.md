@@ -47,7 +47,9 @@ Advantages for this requirement:
 
 Dynamodb provides a serverless solution that speed up the development and scale of the solution. As a JSON documento databases, It provides easy integration to Javascript (node.js) applications.
 
-Additionally, AWS have several features that can improve the capacity, such as Amazon DynamoDB Accelerator (DAX).
+Additionally, AWS have several features that can improve the capacity, such as:
+- Global tables in order to have the same data in several Regions
+- Amazon DynamoDB Accelerator (DAX)
 
 # Frontend
 

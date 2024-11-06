@@ -9,7 +9,9 @@ const HEADERS = {
 export const fetchUrlInfo = (longUrl) => {
     return new Promise((resOk,resErr)=>{
         try {
-            const url = process.env.REACT_APP_API_SHORTENER+"/"+longUrl ;
+            //
+            const url = process.env.REACT_APP_API_SHORTENER+"/"+encodeURIComponent(longUrl) ;
+            //
             fetch(url)
                 .then((resp)=>{
                     if ( resp.status>100 & resp.status<400 ){

@@ -18,7 +18,9 @@ export const getByLongUrlHandler = async (event) => {
   //
   console.log('\n\n\n **** received:', event," ****\n\n");
   //
-  const longUrl = String(event.pathParameters.id||event.pathParameters.longUrl||event.pathParameters.long_url).toLowerCase();
+  let longUrl = String(event.pathParameters.id||event.pathParameters.longUrl||event.pathParameters.long_url).toLowerCase();
+  longUrl = decodeURIComponent(longUrl);
+  //
   let params = {
     TableName : tableName,
     Key: { longUrl: longUrl },
